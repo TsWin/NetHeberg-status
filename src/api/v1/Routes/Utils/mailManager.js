@@ -19,6 +19,10 @@ async function verifyConnection() {
     const connectionVerification = new Promise((resolve, reject) => {
         transporter.verify(function (error, success) {
             if (error) {
+                console.log(`[ERROR] - Mailer Connection Failed, error: ${error}`)
+                console.log(process.env.EMAIL_AUTH_USER)
+                console.log(process.env.EMAIL_PORT)
+                console.log(process.env.EMAIL_IS_SECURE)
                 reject({ status: "500", error: { type: "Internal Server Error", message: "Mail Connection Failed" } });
             } else {
                 resolve({ status: "200", message: "OK"})
