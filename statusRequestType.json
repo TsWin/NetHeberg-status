@@ -1,0 +1,15 @@
+{
+    "monitor": {
+        "monitorID": "*monitorID*",
+        "monitorURL": "*monitorURL*",
+        "monitorName": "*monitorFriendlyName*",
+        "monitorAlertContacts": "*monitorAlertContacts*"
+    },
+    "alert": {
+        "alertType": "*alertType*",
+        "alertName": "*alertTypeFriendlyName*",
+        "alertDetails": "*alertDetails*",
+        "alertDuration": "*alertDuration*",
+        "alertDurationTimestamp": "*alertDateTime*"
+    }
+}
