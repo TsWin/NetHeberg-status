@@ -3,8 +3,8 @@ const mailer = require("nodemailer");
 
 const transporter = mailer.createTransport({
     host: "netheberg.fr",
-    port: 465,
-    secure: true, // true for 465, false for other ports
+    port: parseInt(process.env.EMAIL_PORT),
+    secure: process.env.EMAIL_IS_SECURE === "true" ? true : false, // true for 465, false for other ports
     auth: {
         user: process.env.EMAIL_AUTH_USER, // generated ethereal user
         pass: process.env.EMAIL_AUTH_PASS, // generated ethereal password
