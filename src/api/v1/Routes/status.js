@@ -26,7 +26,7 @@ router.post("/recieve", async (req, res) => {
     })
     if (connectMail.status == "200") {
         switch (monitorData.monitorID) {
-            case "789665004":
+            case process.env.WEBSITE_MONITOR_ID:
                 {
                     const mailResponse = await sendMailWebsite(alertData.alertType, alertInfo).catch((error) => {
                         if (error.status == "400") return res.status(400).json(error);
@@ -45,7 +45,7 @@ router.post("/recieve", async (req, res) => {
                     }
                 }
                 break;
-            case "789665012":
+            case process.env.WEB01_MONITOR_ID:
                 {
                     const mailResponse = await sendMailWEB01(alertData.alertType, alertInfo).catch((error) => {
                         if (error.status == "400") return res.status(400).json(error);
@@ -64,7 +64,7 @@ router.post("/recieve", async (req, res) => {
                     }
                 }
                 break;
-            case "789665016":
+            case process.env.LXC01_MONITOR_ID:
                 {
                     const mailResponse = await sendMailLXC01(alertData.alertType, alertInfo).catch((error) => {
                         if (error.status == "400") return res.status(400).json(error);
