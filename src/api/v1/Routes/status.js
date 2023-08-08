@@ -1,4 +1,4 @@
-const { verifyConnection, sendMailWebsite, sendMailWEB01, sendMailLXC01 } = require('./Utils/mailManager');
+const { verifyConnection, sendMailWebsite, sendMailWEB02 } = require('./Utils/mailManager');
 const { sendWebhookNotification } = require('./Utils/webhookManager');
 
 const router = require('express').Router();
@@ -45,9 +45,9 @@ router.post("/recieve", async (req, res) => {
                     }
                 }
                 break;
-            case process.env.WEB01_MONITOR_ID:
+            case process.env.WEB02_MONITOR_ID:
                 {
-                    const mailResponse = await sendMailWEB01(alertData.alertType, alertInfo).catch((error) => {
+                    const mailResponse = await sendMailWEB02(alertData.alertType, alertInfo).catch((error) => {
                         if (error.status == "400") return res.status(400).json(error);
                         else if (error.status == "500") return res.status(500).json(error);
                         else return res.status(500).json(error);
@@ -63,27 +63,7 @@ router.post("/recieve", async (req, res) => {
                         return res.status(500).json({ status: "500", message: "StatusPage or Discord Webhook Notification Failed", info: { mailResponse, webhookResponse } });
                     }
                 }
-                break;
-            case process.env.LXC01_MONITOR_ID:
-                {
-                    const mailResponse = await sendMailLXC01(alertData.alertType, alertInfo).catch((error) => {
-                        if (error.status == "400") return res.status(400).json(error);
-                        else if (error.status == "500") return res.status(500).json(error);
-                        else return res.status(500).json(error);
-                    })
-                    const webhookResponse = await sendWebhookNotification(alertData.alertType, alertInfo).catch((error) => {
-                        if (error.status == "400") return res.status(400).json(error);
-                        else if (error.status == "500") return res.status(500).json(error);
-                        else return res.status(500).json(error);
-                    })
-                    if (mailResponse.status == "200" && webhookResponse.status == "200") {
-                        return res.status(200).json({ status: "200", message: "StatusPage and Discord Webhook Successfully Notified", info: { mailResponse, webhookResponse } });
-                    } else {
-                        return res.status(500).json({ status: "500", message: "StatusPage or Discord Webhook Notification Failed", info: { mailResponse, webhookResponse } });
-                    }
-                }
-                break;
-    
+                break;   
             default:
                 return res.status(406).json({ status: "406", message: "Not Acceptable", info: "Monitor Not Handled" });
                 break;

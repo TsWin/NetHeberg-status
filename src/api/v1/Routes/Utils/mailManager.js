@@ -93,14 +93,14 @@ async function sendMailWebsite(alertType, alertInfo) {
     return mailSent;
 }
 
-async function sendMailWEB01(alertType, alertInfo) {
+async function sendMailWEB02(alertType, alertInfo) {
     let mailConfig;
     switch (alertType) {
         case "1": 
             {
                 mailConfig = {
                     from: "status@netheberg.fr", // sender address
-                    to: process.env.WEB01_STATUS_MAIL, // list of receivers
+                    to: process.env.WEB02_STATUS_MAIL, // list of receivers
                     subject: "DOWN", // Subject line
                     text: `MONITOR:${alertInfo.monitorName}\nMONITOR_URL:${alertInfo.monitorURL}\nALERT_NAME:${alertInfo.alertName}\nDETAILS:${alertInfo.alertDetails}\nDURATION:${alertInfo.alertDuration}\nDURATION_TMP:${alertInfo.alertDurationTimestamp}`,
                 };
@@ -110,7 +110,7 @@ async function sendMailWEB01(alertType, alertInfo) {
             {
                 mailConfig = {
                     from: "status@netheberg.fr", // sender address
-                    to: process.env.WEB01_STATUS_MAIL, // list of receivers
+                    to: process.env.WEB02_STATUS_MAIL, // list of receivers
                     subject: "UP", // Subject line
                     text: `MONITOR:${alertInfo.monitorName}\nMONITOR_URL:${alertInfo.monitorURL}\nALERT_NAME:${alertInfo.alertName}\nDETAILS:${alertInfo.alertDetails}\nDURATION:${alertInfo.alertDuration}\nDURATION_TMP:${alertInfo.alertDurationTimestamp}`,
                 };
@@ -120,7 +120,7 @@ async function sendMailWEB01(alertType, alertInfo) {
             {
                 mailConfig = {
                     from: "status@netheberg.fr", // sender address
-                    to: process.env.WEB01_STATUS_MAIL_PARTIAL, // list of receivers
+                    to: process.env.WEB02_STATUS_MAIL_PARTIAL, // list of receivers
                     subject: "DOWN", // Subject line
                     text: `MONITOR:${alertInfo.monitorName}\nMONITOR_URL:${alertInfo.monitorURL}\nALERT_NAME:${alertInfo.alertName}\nDETAILS:${alertInfo.alertDetails}\nDURATION:${alertInfo.alertDuration}\nDURATION_TMP:${alertInfo.alertDurationTimestamp}`,
                 };
@@ -130,7 +130,7 @@ async function sendMailWEB01(alertType, alertInfo) {
             {
                 mailConfig = {
                     from: "status@netheberg.fr", // sender address
-                    to: process.env.WEB01_STATUS_MAIL_PARTIAL, // list of receivers
+                    to: process.env.WEB02_STATUS_MAIL_PARTIAL, // list of receivers
                     subject: "UP", // Subject line
                     text: `MONITOR:${alertInfo.monitorName}\nMONITOR_URL:${alertInfo.monitorURL}\nALERT_NAME:${alertInfo.alertName}\nDETAILS:${alertInfo.alertDetails}\nDURATION:${alertInfo.alertDuration}\nDURATION_TMP:${alertInfo.alertDurationTimestamp}`,
                 };
@@ -143,7 +143,7 @@ async function sendMailWEB01(alertType, alertInfo) {
         if (!mailConfig) reject({ status: "400", error: { type: "Bad Request", message: "Alert type does not match" } });
         transporter.sendMail(mailConfig, (error, info) => {
             if (error) {
-                console.error(`[ERROR] - [WEB01] Mail Sending Failed, error: ${error}`)
+                console.error(`[ERROR] - [WEB02] Mail Sending Failed, error: ${error}`)
                 reject({ status: "500", error: { type: "Internal Server Error", message: "StatusPage Notification Failed", error: `${error.name}: ${error.message}` } });
             }
             else {
@@ -155,66 +155,4 @@ async function sendMailWEB01(alertType, alertInfo) {
     return mailSent;
 }
 
-async function sendMailLXC01(alertType, alertInfo) {
-    let mailConfig;
-    switch (alertType) {
-        case "1": 
-            {
-                mailConfig = {
-                    from: "status@netheberg.fr", // sender address
-                    to: process.env.LXC01_STATUS_MAIL, // list of receivers
-                    subject: "DOWN", // Subject line
-                    text: `MONITOR:${alertInfo.monitorName}\nMONITOR_URL:${alertInfo.monitorURL}\nALERT_NAME:${alertInfo.alertName}\nDETAILS:${alertInfo.alertDetails}\nDURATION:${alertInfo.alertDuration}\nDURATION_TMP:${alertInfo.alertDurationTimestamp}`,
-                };
-            }
-            break;
-        case "2":
-            {
-                mailConfig = {
-                    from: "status@netheberg.fr", // sender address
-                    to: process.env.LXC01_STATUS_MAIL, // list of receivers
-                    subject: "UP", // Subject line
-                    text: `MONITOR:${alertInfo.monitorName}\nMONITOR_URL:${alertInfo.monitorURL}\nALERT_NAME:${alertInfo.alertName}\nDETAILS:${alertInfo.alertDetails}\nDURATION:${alertInfo.alertDuration}\nDURATION_TMP:${alertInfo.alertDurationTimestamp}`,
-                };
-            }
-            break;
-        case "3":
-            {
-                mailConfig = {
-                    from: "status@netheberg.fr", // sender address
-                    to: process.env.LXC01_STATUS_MAIL_PARTIAL, // list of receivers
-                    subject: "DOWN", // Subject line
-                    text: `MONITOR:${alertInfo.monitorName}\nMONITOR_URL:${alertInfo.monitorURL}\nALERT_NAME:${alertInfo.alertName}\nDETAILS:${alertInfo.alertDetails}\nDURATION:${alertInfo.alertDuration}\nDURATION_TMP:${alertInfo.alertDurationTimestamp}`,
-                };
-            }
-            break;
-        case "4":
-            {
-                mailConfig = {
-                    from: "status@netheberg.fr", // sender address
-                    to: process.env.LXC01_STATUS_MAIL_PARTIAL, // list of receivers
-                    subject: "UP", // Subject line
-                    text: `MONITOR:${alertInfo.monitorName}\nMONITOR_URL:${alertInfo.monitorURL}\nALERT_NAME:${alertInfo.alertName}\nDETAILS:${alertInfo.alertDetails}\nDURATION:${alertInfo.alertDuration}\nDURATION_TMP:${alertInfo.alertDurationTimestamp}`,
-                };
-            }
-            break;
-    }
-    
-
-    const mailSent = new Promise((resolve, reject) => {
-        if (!mailConfig) reject({ status: "400", error: { type: "Bad Request", message: "Alert type does not match" } });
-        transporter.sendMail(mailConfig, (error, info) => {
-            if (error) {
-                console.error(`[ERROR] - [LXC01] Mail Sending Failed, error: ${error}`)
-                reject({ status: "500", error: { type: "Internal Server Error", message: "StatusPage Notification Failed", error: `${error.name}: ${error.message}` } });
-            }
-            else {
-                resolve({ status: "200", message: "StatusPage Successfully Notified", info });
-            }
-        });
-    });
-
-    return mailSent;
-}
-
-module.exports = { verifyConnection, sendMailWebsite, sendMailWEB01, sendMailLXC01 };
+module.exports = { verifyConnection, sendMailWebsite, sendMailWEB02 };
